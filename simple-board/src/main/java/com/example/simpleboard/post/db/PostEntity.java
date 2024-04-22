@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -36,7 +37,10 @@ public class PostEntity {
     private LocalDateTime postedAt;
     private String status;
 
-    @Transient
-    private List<ReplyEntity> replyList = List.of();
+    @OneToMany(
+            mappedBy = "post"
+    )
+    @Builder.Default
+    private List<ReplyEntity> replyList = new ArrayList<>();
 
 }
