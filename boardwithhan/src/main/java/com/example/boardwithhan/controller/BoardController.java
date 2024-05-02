@@ -6,7 +6,12 @@ import com.example.boardwithhan.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 public class BoardController {
@@ -22,14 +27,17 @@ public class BoardController {
 
     @PostMapping("/board/writepro")
 //    public String boardWritePro(String title, String content) {
-    public String boardWritePro(Board board) {
+    public String boardWritePro(Board board, Model model,@RequestParam("file") MultipartFile file) throws Exception {
 
-        boardService.write(board);
+        boardService.write(board, file);
 
-        return "";
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        return "message";
     }
 
-    @GetMapping("board/list")
+    @GetMapping("/board/list")
     public String boardList(Model model) {
 
         model.addAttribute("list", boardService.boardList());
@@ -37,12 +45,39 @@ public class BoardController {
         return "boardlist";
     }
 
+
     @GetMapping("/board/view")
-    public String boardView(Model model, Integer id) {
+    public String boardView(Model model, @RequestParam("id") Integer id) {
+        model.addAttribute("board", boardService.boardView(id));
+        return "boardview";
+    }
+
+    @GetMapping("/board/delete")
+    public String boardDelete(@RequestParam("id") Integer id) {
+
+        boardService.boardDelete(id);
+
+        return "message";
+    }
+
+    @GetMapping("/board/modify/{id}")
+    public String boardModify(@PathVariable("id") Integer id, Model model) {
 
         model.addAttribute("board", boardService.boardView(id));
 
-        return "boardview";
+        return "boardmodify";
+    }
+
+    @PostMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable("id") Integer id, Board board,@RequestParam("file") MultipartFile file) throws Exception {
+
+        Board boardTemp = boardService.boardView(id);
+        boardTemp.setTitle(board.getTitle());
+        boardTemp.setContent(board.getContent());
+
+        boardService.write(boardTemp, file);
+
+        return "redirect:/board/list";
     }
 
 }
