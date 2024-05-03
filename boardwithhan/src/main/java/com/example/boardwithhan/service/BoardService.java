@@ -3,6 +3,8 @@ package com.example.boardwithhan.service;
 import com.example.boardwithhan.entity.Board;
 import com.example.boardwithhan.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,9 +39,14 @@ public class BoardService {
     }
 
     // 게시글 리스트
-    public List<Board> boardList() {
+    public Page<Board> boardList(Pageable pageable) {
 
-        return boardRepository.findAll();
+        return boardRepository.findAll(pageable);
+    }
+
+    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable) {
+
+        return boardRepository.findByTitleContaining(searchKeyword, pageable);
     }
 
     // 게시글 상세

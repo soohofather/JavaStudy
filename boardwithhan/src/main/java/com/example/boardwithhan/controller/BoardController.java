@@ -1,5 +1,9 @@
 package com.example.boardwithhan.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import com.example.boardwithhan.entity.Board;
 import com.example.boardwithhan.service.BoardService;
@@ -38,13 +42,29 @@ public class BoardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model) {
+    public String boardList(Model model,
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                            @RequestParam("searchKeyword") String searchKeyword) {
 
-        model.addAttribute("list", boardService.boardList());
+        Page<Board> list = null;
+
+        if(searchKeyword == null) {
+            list = boardService.boardList(pageable);
+        } else {
+            list = boardService.boardSearchList(searchKeyword, pageable);
+        }
+
+        int nowPage = list.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", boardService.boardList(pageable));
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "boardlist";
     }
-
 
     @GetMapping("/board/view")
     public String boardView(Model model, @RequestParam("id") Integer id) {
