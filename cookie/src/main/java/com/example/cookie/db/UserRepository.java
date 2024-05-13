@@ -55,7 +55,7 @@ public class UserRepository {
         userList.add(
                 new UserDto(
                         UUID.randomUUID().toString(),
-                        "이순신",
+                        "철수",
                         "1234"
                 )
         );

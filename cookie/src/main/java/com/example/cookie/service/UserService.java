@@ -36,6 +36,8 @@ public class UserService {
                 var cookie = new Cookie("authorization-cookie",userDto.getId());
                 cookie.setDomain("localhost"); // naver.com, daun.net (지정된 도메인에서만 사용가능, www는 빼고 입력)
                 cookie.setPath("/");
+                cookie.setHttpOnly(true); // 브라우저에서 자바스크립트로 정보를 가져가는것을 막음
+                cookie.setSecure(true); // https 에서만 사용되도록 설정
                 cookie.setMaxAge(-1); // session과 동일, -1 session이 유지되는 동안
 
 
