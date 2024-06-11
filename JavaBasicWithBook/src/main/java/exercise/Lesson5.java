@@ -1,10 +1,10 @@
-package If;
+package exercise;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PracticeIf {
+public class Lesson5 {
 
     public static void main(String[] args) throws IOException {
         System.out.println("2개 정수를 입력하십시오.");

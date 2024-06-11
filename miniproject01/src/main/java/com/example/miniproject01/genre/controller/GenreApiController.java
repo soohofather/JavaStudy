@@ -1,0 +1,67 @@
+package com.example.miniproject01.genre.controller;
+
+import com.example.miniproject01.exception.NotFoundException;
+import com.example.miniproject01.genre.db.GenreRepository;
+import com.example.miniproject01.genre.dto.GenreDto;
+import com.example.miniproject01.genre.dto.GenreRequest;
+import com.example.miniproject01.genre.service.GenreService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/genre")
+public class GenreApiController {
+
+    private final GenreService genreService;
+
+    @Autowired
+    private GenreRepository genreRepository;
+
+    @PostMapping("/create")
+    public GenreDto create(
+
+            @Valid
+            @RequestBody
+            GenreRequest genreRequest
+
+    ){
+        return genreService.create(genreRequest);
+    }
+
+    @GetMapping("/list")
+    public List<GenreDto> list(){
+
+        return genreService.all();
+    }
+
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<String> genreDelete(@PathVariable("id") Long id) {
+
+        genreService.genreDelete(id);
+        return ResponseEntity.ok("Delete Completed");
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(NotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @GetMapping("/api")
+    public void genreApiSave() {  // 반환 타입을 String에서 void로 변경하여 직접 출력
+
+        genreService.genreApiSave();
+    }
+
+    @GetMapping("/api2")
+    public void genreApiSave2() {  // 반환 타입을 String에서 void로 변경하여 직접 출력
+
+        genreService.genreApiSave2();
+    }
+}

@@ -3,7 +3,6 @@ package com.example.simpleboard.board.db;
 import com.example.simpleboard.post.db.PostEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.OrderBy;
 import org.hibernate.annotations.Where;
 
 import java.util.List;

@@ -49,5 +49,23 @@ public class UserApiController {
         return userService.filterScore(score);
     }
 
+    @GetMapping("/min-max")
+    public List<UserEntity> filterscore(
+            @RequestParam int min,
+            @RequestParam int max
+
+    ){
+        return userService.filterScore(min, max);
+    }
+
+    @GetMapping("/min2-max2")
+    public List<UserEntity> filterscore2(
+            @RequestParam int min2,
+            @RequestParam int max2
+
+    ){
+        return userService.filterScore2(min2, max2);
+    }
+
 
 }
