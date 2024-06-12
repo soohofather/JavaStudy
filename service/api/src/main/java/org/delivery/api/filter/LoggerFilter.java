@@ -37,7 +37,12 @@ public class LoggerFilter implements Filter {
             var headerValue = req.getHeader(headerKey);
 
             // authorization-token : ??? , user-agent : ???
-            headerValues.append(headerKey).append(" : ").append(headerValue).append(" , ");
+            headerValues
+                    .append("[")
+                    .append(headerKey)
+                    .append(" : ")
+                    .append(headerValue)
+                    .append("] ");
         });
 
         var requestBody = new String(req.getContentAsByteArray());
@@ -53,7 +58,12 @@ public class LoggerFilter implements Filter {
             var headerValue = res.getHeader(headerKey);
 
             // authorization-token : ??? , user-agent : ???
-            responseHeaderValues.append(headerKey).append(" : ").append(headerValue).append(" , ");
+            responseHeaderValues
+                    .append("[")
+                    .append(headerKey)
+                    .append(" : ")
+                    .append(headerValue)
+                    .append("] ");
         });
 
         var responseBody = new String(res.getContentAsByteArray());
