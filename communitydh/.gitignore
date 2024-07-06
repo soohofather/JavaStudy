@@ -36,12 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-# application.properties
-src/main/resources/application-private.properties
-
-# docker-compose
-docker-compose.yml
-
-# docker
-Dockerfile
-
+.env
