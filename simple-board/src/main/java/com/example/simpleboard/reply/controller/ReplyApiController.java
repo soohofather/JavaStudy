@@ -22,7 +22,7 @@ public class ReplyApiController {
     public ReplyEntity create(
             @Valid
             @RequestBody ReplyRequest replyRequest
-            ){
+            ) {
         return replyService.create(replyRequest);
     }
 }

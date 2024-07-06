@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="db-1.0-SNAPSHOT-plain1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/db/build/libs/db-1.0-SNAPSHOT-plain.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
